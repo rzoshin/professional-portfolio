@@ -1,6 +1,7 @@
 "use client";
 
 import { projects } from "@/lib/data";
+import Link from "next/link";
 
 export default function Projects() {
   return (
@@ -59,6 +60,13 @@ export default function Projects() {
               </div>
 
               <div className="project-links">
+                {/* View Details — links to /projects/[slug] */}
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="project-link details"
+                >
+                  View Details →
+                </Link>
                 <a
                   href={project.github}
                   target="_blank"
@@ -74,7 +82,7 @@ export default function Projects() {
                     rel="noopener noreferrer"
                     className="project-link live"
                   >
-                    Live Demo ↗
+                    Live ↗
                   </a>
                 )}
               </div>

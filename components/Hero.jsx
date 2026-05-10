@@ -73,6 +73,14 @@ export default function Hero() {
           >
             About Me
           </a>
+          {/* ── CV Download Button ── */}
+          <a
+            href="/resume.pdf"
+            download
+            className="btn btn-cv"
+          >
+            ⬇ Download CV
+          </a>
         </div>
       </div>
 

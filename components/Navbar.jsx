@@ -1,8 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 
-const links = ["Home", "About", "Education", "Skills", "Projects"];
+const links = ["Home", "About", "Education", "Skills", "Projects", "Contact"];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);

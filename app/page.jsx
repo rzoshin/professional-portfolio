@@ -4,6 +4,7 @@ import About from "@/components/About";
 import Education from "@/components/Education";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
+import Contact from "@/components/Contact";
 import ClientShell from "@/components/ClientShell";
 import { personalInfo } from "@/lib/data";
 
@@ -19,6 +20,7 @@ export default function Home() {
         <Education />
         <Skills />
         <Projects />
+        <Contact />
       </main>
 
       <footer>
