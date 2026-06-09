@@ -114,6 +114,41 @@ body {
 .badge-css3       { background: #00101a; color: #38bdf8; border-color: #002040; }
 .badge-reactrouter { background: #1a0505; color: #ef4444; border-color: #3a0f0f; }
 .badge-recharts { background: #0a1a2e; color: #22d3ee; border-color: #1a3a5c; }
+.badge-typescript {
+  background: #0b1f3a;
+  color: #3178c6;
+  border-color: #1d4e89;
+}
+
+.badge-shadcn {
+  background: #18181b;
+  color: #fafafa;
+  border-color: #3f3f46;
+}
+
+.badge-mongoose {
+  background: #1a0c0c;
+  color: #b91c1c;
+  border-color: #4c1111;
+}
+
+.badge-openai {
+  background: #052e16;
+  color: #4ade80;
+  border-color: #166534;
+}
+
+.badge-redis {
+  background: #1a0d0d;
+  color: #dc2626;
+  border-color: #7f1d1d;
+}
+
+.badge-vercel {
+  background: #0a0a0a;
+  color: #ffffff;
+  border-color: #333333;
+}
 
 /* ============ CURSOR (desktop only) ============ */
 @media (pointer: fine) {
