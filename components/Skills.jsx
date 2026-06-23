@@ -203,10 +203,12 @@ export default function Skills() {
                         <motion.div
                           key={item.name}
                           variants={skillBoxVariants}
-                          className={`skill-box skill-box--${item.gradient}`}
+                          className={`skill-box skill-box--${item.gradient} skill-box--icon-${item.icon}`}
                         >
                           {SkillIcon && (
-                            <SkillIcon className="skill-box-icon" aria-hidden="true" />
+                            <span className="skill-box-icon-wrap">
+                              <SkillIcon className="skill-box-icon" aria-hidden="true" />
+                            </span>
                           )}
                           <span className="skill-box-name">{item.name}</span>
                         </motion.div>

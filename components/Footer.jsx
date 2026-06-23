@@ -46,7 +46,7 @@ export default function Footer() {
 
         <div className="site-footer-bottom">
           <p>
-            © {new Date().getFullYear()}{" "}
+            © 2026{" "}
             <span className="highlight">{personalInfo.name}</span>. All rights
             reserved.
           </p>

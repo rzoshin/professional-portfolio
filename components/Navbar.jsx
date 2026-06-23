@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
-import DevModeToggle from "./DevModeToggle";
+import NavDropdown from "./NavDropdown";
 
 const links = [
   "Home",
@@ -65,11 +65,13 @@ export default function Navbar() {
 
   return (
     <nav className={`navbar${scrolled ? " scrolled" : ""}`}>
-      <a className="nav-logo" onClick={scrollToHome} role="button" tabIndex={0}>
-        <Logo />
-      </a>
+      <div className="navbar-section navbar-left">
+        <a className="nav-logo" onClick={scrollToHome} role="button" tabIndex={0}>
+          <Logo />
+        </a>
+      </div>
 
-      <div className="navbar-right">
+      <div className="navbar-section navbar-center">
         <ul className={`nav-links${menuOpen ? " open" : ""}`}>
           {links.map((label) => {
             const id = label.toLowerCase();
@@ -87,10 +89,12 @@ export default function Navbar() {
             );
           })}
         </ul>
+      </div>
 
+      <div className="navbar-section navbar-right">
         <div className="nav-actions">
           <ThemeToggle />
-          <DevModeToggle />
+          <NavDropdown />
           <button
             className={`menu-toggle${menuOpen ? " active" : ""}`}
             onClick={() => setMenuOpen(!menuOpen)}

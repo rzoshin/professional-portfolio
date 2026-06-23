@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { PiGraduationCap } from "react-icons/pi";
 import { BsBriefcase } from "react-icons/bs";
 import { TbMicroscope } from "react-icons/tb";
@@ -40,43 +39,29 @@ export default function About() {
         <SectionLine />
       </div>
 
-      <div className="about-grid">
-        <div className="about-left glass-card">
-          <div className="about-profile-row">
-            <div className="about-photo-wrap">
-              <Image
-                src="/profile.png"
-                alt={personalInfo.name}
-                width={96}
-                height={96}
-                className="about-photo"
-              />
+      <div className="about-card glass-card">
+        <div className="about-card-inner">
+          <div className="about-col about-col--identity">
+            <h3 className="about-name">{personalInfo.name}</h3>
+            <p className="about-role">{personalInfo.role}</p>
+            <span className="about-badge about-badge--available">
+              {personalInfo.availability}
+            </span>
+
+            <div className="about-location-pill">
+              <HiOutlineMapPin className="about-location-icon" aria-hidden="true" />
+              <span>{personalInfo.location}</span>
             </div>
-            <div className="about-identity">
-              <h3 className="about-name">{personalInfo.name}</h3>
-              <p className="about-role">{personalInfo.role}</p>
-              <span className="about-badge about-badge--available">
-                {personalInfo.availability}
-              </span>
+
+            <div className="about-stats-grid">
+              {personalInfo.aboutStats.map((stat) => (
+                <div key={stat.label} className="about-stat-cell">
+                  <div className="about-stat-value">{stat.value}</div>
+                  <div className="about-stat-label">{stat.label}</div>
+                </div>
+              ))}
             </div>
-          </div>
 
-          <div className="about-location-pill">
-            <HiOutlineMapPin className="about-location-icon" aria-hidden="true" />
-            <span>{personalInfo.location}</span>
-          </div>
-
-          <div className="about-stats-grid">
-            {personalInfo.aboutStats.map((stat) => (
-              <div key={stat.label} className="about-stat-cell">
-                <div className="about-stat-value">{stat.value}</div>
-                <div className="about-stat-label">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="about-connect">
-            <span className="about-connect-label">Connect</span>
             <div className="about-socials">
               {aboutSocialLinks.map((link) => {
                 const Icon = ABOUT_SOCIAL_ICONS[link.id];
@@ -96,28 +81,28 @@ export default function About() {
               })}
             </div>
           </div>
-        </div>
 
-        <div className="about-right glass-card">
-          <div className="about-bio">
-            {personalInfo.bioParagraphs.map((paragraph, i) => (
-              <p key={i}>{paragraph}</p>
-            ))}
-          </div>
+          <div className="about-col about-col--content">
+            <div className="about-bio">
+              {personalInfo.bioParagraphs.map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
+            </div>
 
-          <div className="about-info-grid">
-            {personalInfo.aboutInfo.map((item) => {
-              const Icon = INFO_ICONS[item.icon];
-              return (
-                <div key={item.title} className="about-info-card glass-card">
-                  <div className="about-info-icon-wrap">
-                    {Icon && <Icon className="about-info-icon" />}
+            <div className="about-info-grid">
+              {personalInfo.aboutInfo.map((item) => {
+                const Icon = INFO_ICONS[item.icon];
+                return (
+                  <div key={item.title} className="about-info-card glass-card">
+                    <div className="about-info-icon-wrap">
+                      {Icon && <Icon className="about-info-icon" />}
+                    </div>
+                    <div className="about-info-title">{item.title}</div>
+                    <div className="about-info-value">{item.value}</div>
                   </div>
-                  <div className="about-info-title">{item.title}</div>
-                  <div className="about-info-value">{item.value}</div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
