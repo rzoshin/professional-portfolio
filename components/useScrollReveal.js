@@ -8,13 +8,6 @@ export default function useScrollReveal() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
-
-            // Animate skill bars when they come into view
-            const fills = entry.target.querySelectorAll(".skill-fill");
-            fills.forEach((fill) => {
-              const target = fill.dataset.width;
-              if (target) fill.style.width = target + "%";
-            });
           }
         });
       },

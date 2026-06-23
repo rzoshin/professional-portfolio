@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="rz-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0F0F17"/>
+  <text x="10" y="38" font-family="monospace" font-size="14" font-weight="700" fill="url(#rz-grad)">&lt;</text>
+  <text x="22" y="42" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="url(#rz-grad)">RZ</text>
+  <text x="50" y="38" font-family="monospace" font-size="14" font-weight="700" fill="url(#rz-grad)">/&gt;</text>
+</svg>

@@ -3,6 +3,7 @@
 import { projects } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ProjectDetailPage({ params }) {
   const project = projects.find((p) => p.slug === params.slug);
@@ -50,9 +51,11 @@ export default function ProjectDetailPage({ params }) {
               {project.badges.map((badge, i) => (
                 <span key={i} className={`project-badge badge-${badge.style}`}>
                   {badge.icon && (
-                    <img
+                    <Image
                       src={badge.icon}
                       alt=""
+                      width={13}
+                      height={13}
                       className={`badge-icon${badge.style === "next" ? " badge-icon--invert" : ""}`}
                     />
                   )}
@@ -78,11 +81,12 @@ export default function ProjectDetailPage({ params }) {
           <div className="pd-hero-visual">
             <div className="pd-visual-frame">
               <div className={`pd-visual-gradient bg-gradient-to-br ${project.gradient}`} />
-              <img
+              <Image
                 src={`/projects/${project.slug}.png`}
                 alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 520px"
                 className="pd-visual-img"
-                onError={(e) => { e.target.style.display = "none"; }}
               />
               <div className="pd-visual-shine" />
             </div>

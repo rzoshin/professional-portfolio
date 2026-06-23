@@ -1,16 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { personalInfo } from "@/lib/data";
+
+const SKILL_CHIPS = ["React", "Next.js", "Node.js", "MongoDB"];
 
 export default function Hero() {
   const [text, setText] = useState("");
-  const [tagIdx, setTagIdx] = useState(0);
+  const [roleIdx, setRoleIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const taglines = personalInfo.taglines;
-    const current = taglines[tagIdx];
+    const roles = personalInfo.heroRoles;
+    const current = roles[roleIdx];
     const delay = deleting ? 50 : charIdx === current.length ? 1800 : 80;
 
     const timer = setTimeout(() => {
@@ -24,70 +27,86 @@ export default function Hero() {
         setDeleting(true);
       } else {
         setDeleting(false);
-        setTagIdx((t) => (t + 1) % taglines.length);
+        setRoleIdx((r) => (r + 1) % roles.length);
         setCharIdx(0);
       }
     }, delay);
 
     return () => clearTimeout(timer);
-  }, [text, charIdx, deleting, tagIdx]);
+  }, [text, charIdx, deleting, roleIdx]);
+
+  const scrollToAbout = (e) => {
+    e.preventDefault();
+    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToProjects = (e) => {
+    e.preventDefault();
+    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-    <section className="hero" id="home">
-      <div className="hero-blob hero-blob-1" aria-hidden="true" />
-      <div className="hero-blob hero-blob-2" aria-hidden="true" />
+    <section className="hero" id="home" data-dev-label="// Hero.jsx">
+      <div className="hero-mesh" aria-hidden="true" />
 
-      <div className="hero-content">
-        <p className="hero-greeting">👋 Welcome to my world</p>
+      <div className="hero-grid">
+        <div className="hero-text">
+          <p className="hero-greeting">Hi, I&apos;m</p>
 
-        <h1 className="hero-title">
-          I&apos;m{" "}
-          <span className="highlight">{personalInfo.name}</span>
-        </h1>
+          <h1 className="hero-title">
+            <span className="highlight">{personalInfo.name}</span>
+          </h1>
 
-        <p className="hero-subtitle">{personalInfo.role}</p>
+          <div className="typewriter-wrap">
+            <span>{text}</span>
+            <span className="cursor-blink">|</span>
+          </div>
 
-        <div className="typewriter-wrap">
-          <span>{text}</span>
-          <span className="cursor-blink">|</span>
+          <div className="hero-btns">
+            <a
+              href="#projects"
+              className="btn btn-primary"
+              onClick={scrollToProjects}
+            >
+              View My Work →
+            </a>
+            <a href="/resume.pdf" download className="btn btn-ghost">
+              Download CV
+            </a>
+          </div>
         </div>
 
-        <div className="hero-btns">
-          <a
-            href="#projects"
-            className="btn btn-primary"
-            onClick={(e) => {
-              e.preventDefault();
-              document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-            }}
-          >
-            View My Work →
-          </a>
-          <a
-            href="#about"
-            className="btn btn-outline"
-            onClick={(e) => {
-              e.preventDefault();
-              document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
-            }}
-          >
-            About Me
-          </a>
-          {/* ── CV Download Button ── */}
-          <a
-            href="/resume.pdf"
-            download
-            className="btn btn-cv"
-          >
-            ⬇ Download CV
-          </a>
+        <div className="hero-visual">
+          <div className="hero-photo-ring">
+            <Image
+              src="/profile.png"
+              alt={personalInfo.name}
+              width={400}
+              height={400}
+              priority
+              className="hero-photo"
+            />
+          </div>
+          {SKILL_CHIPS.map((skill, i) => (
+            <span
+              key={skill}
+              className={`hero-skill-chip hero-skill-chip--${i + 1}`}
+            >
+              {skill}
+            </span>
+          ))}
         </div>
       </div>
 
-      <div className="scroll-indicator" aria-hidden="true">
-        <div className="scroll-mouse" />
-        <span>Scroll Down</span>
-      </div>
+      <a
+        href="#about"
+        className="hero-scroll-arrow"
+        onClick={scrollToAbout}
+        aria-label="Scroll to about section"
+      >
+        <span className="hero-scroll-arrow-icon">↓</span>
+        <span className="hero-scroll-arrow-label">Scroll</span>
+      </a>
     </section>
   );
 }

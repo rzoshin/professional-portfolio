@@ -1,14 +1,15 @@
 import { education } from "@/lib/data";
+import SectionLine from "./SectionLine";
 
 export default function Education() {
   return (
-    <section className="education" id="education">
-      <div className="section-header reveal">
+    <section className="education" id="education" data-dev-label="// Education.jsx">
+      <div className="section-header">
         <p className="section-tag">My Background</p>
         <h2 className="section-title">
           My <span className="highlight">Education</span>
         </h2>
-        <div className="section-line" />
+        <SectionLine />
         <p className="section-desc">Where I&apos;ve learned and grown.</p>
       </div>
 

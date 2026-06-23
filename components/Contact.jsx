@@ -1,142 +1,167 @@
 "use client";
-import { personalInfo } from "@/lib/data";
-import { useState } from "react";
+
+import { contactLinks, personalInfo } from "@/lib/data";
+import SectionLine from "./SectionLine";
+import { useCallback, useEffect, useState } from "react";
+import { HiOutlineMapPin, HiOutlineBolt } from "react-icons/hi2";
+import {
+  FaEnvelope,
+  FaLinkedin,
+  FaGithub,
+  FaGlobe,
+  FaWhatsapp,
+  FaCopy,
+  FaExternalLinkAlt,
+} from "react-icons/fa";
+
+const CONTACT_ICONS = {
+  email: FaEnvelope,
+  linkedin: FaLinkedin,
+  github: FaGithub,
+  portfolio: FaGlobe,
+  whatsapp: FaWhatsapp,
+};
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [toast, setToast] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Wire up to your email service here (e.g. EmailJS, Formspree)
-    setSent(true);
-    setForm({ name: "", email: "", message: "" });
-  };
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(null), 2500);
+    return () => clearTimeout(timer);
+  }, [toast]);
+
+  const handleCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(personalInfo.email);
+      setToast("Email copied to clipboard!");
+    } catch {
+      setToast("Could not copy email");
+    }
+  }, []);
 
   return (
-    <section className="contact" id="contact">
-      <div className="section-header reveal">
+    <section className="contact" id="contact" data-dev-label="// Contact.jsx">
+      <div className="section-header">
         <p className="section-tag">Get In Touch</p>
         <h2 className="section-title">
           Contact <span className="highlight">Me</span>
         </h2>
-        <div className="section-line" />
+        <SectionLine />
         <p className="section-desc">
-          Have a project in mind or just want to say hello? I&apos;d love to hear from you.
+          Have a project in mind or want to collaborate? Reach out through any
+          channel below.
         </p>
       </div>
 
-      <div className="contact-grid">
-        {/* Info cards */}
-        <div className="contact-info reveal-left">
-          <div className="contact-card">
-            <div className="contact-icon">📧</div>
-            <div>
-              <div className="contact-label">Email</div>
-              <a href={`mailto:${personalInfo.email}`} className="contact-value">
-                {personalInfo.email}
-              </a>
-            </div>
+      <div className="contact-layout">
+        <div className="contact-intro glass-card">
+          <div className="contact-intro-header">
+            <span className="contact-intro-dot" aria-hidden="true" />
+            <h3 className="contact-intro-title">Let&apos;s Connect</h3>
           </div>
 
-          <div className="contact-card">
-            <div className="contact-icon">📱</div>
-            <div>
-              <div className="contact-label">Phone</div>
-              <a href={`tel:${personalInfo.phone}`} className="contact-value">
-                {personalInfo.phone}
-              </a>
-            </div>
+          <blockquote className="contact-intro-quote">
+            Whether you have a project in mind, want to collaborate, or just want
+            to say hello — I&apos;m always open to meaningful conversations.
+          </blockquote>
+
+          <div className="contact-intro-chips">
+            <span className="contact-intro-chip contact-intro-chip--available">
+              {personalInfo.availability}
+            </span>
+            <span className="contact-intro-chip">
+              <HiOutlineMapPin className="contact-intro-chip-icon" aria-hidden="true" />
+              {personalInfo.location}
+            </span>
+            <span className="contact-intro-chip">
+              <HiOutlineBolt className="contact-intro-chip-icon" aria-hidden="true" />
+              Usually replies within 24h
+            </span>
           </div>
 
-          {personalInfo.whatsapp && (
-            <div className="contact-card">
-              <div className="contact-icon">💬</div>
-              <div>
-                <div className="contact-label">WhatsApp</div>
-                <a
-                  href={`https://wa.me/${personalInfo.whatsapp}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="contact-value"
-                >
-                  {personalInfo.whatsapp}
-                </a>
-              </div>
-            </div>
-          )}
-
-          <div className="contact-card">
-            <div className="contact-icon">📍</div>
-            <div>
-              <div className="contact-label">Location</div>
-              <div className="contact-value">{personalInfo.location}</div>
-            </div>
-          </div>
-
-          <div className="contact-socials">
-            <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="social-btn">
-              GitHub
-            </a>
-            <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="social-btn social-btn--primary">
-              LinkedIn
-            </a>
+          <div className="contact-intro-cta">
+            <p className="contact-intro-cta-label">Ready to start?</p>
+            <p className="contact-intro-cta-email">{personalInfo.email}</p>
+            <button
+              type="button"
+              className="contact-intro-cta-btn"
+              onClick={handleCopy}
+            >
+              Copy email
+            </button>
           </div>
         </div>
 
-        {/* Contact form */}
-        <div className="contact-form-wrap reveal-right">
-          {sent ? (
-            <div className="contact-success">
-              <div className="success-icon">✅</div>
-              <h3>Message Sent!</h3>
-              <p>Thanks for reaching out. I&apos;ll get back to you soon.</p>
-              <button className="btn btn-outline" onClick={() => setSent(false)}>
-                Send Another
-              </button>
-            </div>
-          ) : (
-            <form className="contact-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input
-                  id="name"
-                  type="text"
-                  placeholder="Your name"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  id="email"
-                  type="email"
-                  placeholder="your@email.com"
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="message">Message</label>
-                <textarea
-                  id="message"
-                  rows={5}
-                  placeholder="Tell me about your project or idea..."
-                  value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  required
-                />
-              </div>
-              <button type="submit" className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }}>
-                Send Message →
-              </button>
-            </form>
-          )}
+        <div className="contact-links-grid">
+          {contactLinks.map((link) => {
+            const Icon = CONTACT_ICONS[link.iconKey];
+            const isEmail = link.id === "email";
+            const primaryAction = link.actions.find(
+              (a) => a.type === "visit" || a.type === "open"
+            );
+
+            return (
+              <article key={link.id} className="contact-link-card glass-card">
+                <div className="contact-link-card-top">
+                  <div className="contact-link-icon-wrap">
+                    {Icon && <Icon className="contact-link-card-icon" aria-hidden="true" />}
+                  </div>
+                  {isEmail ? (
+                    <div className="contact-link-email-actions">
+                      <button
+                        type="button"
+                        className="contact-link-icon-btn"
+                        onClick={handleCopy}
+                        aria-label="Copy email"
+                      >
+                        <FaCopy size={14} />
+                      </button>
+                      <a
+                        href={link.href}
+                        className="contact-link-icon-btn"
+                        aria-label="Open email"
+                      >
+                        <FaExternalLinkAlt size={13} />
+                      </a>
+                    </div>
+                  ) : (
+                    <a
+                      href={primaryAction?.href || link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="contact-link-arrow"
+                      aria-label={`Open ${link.label}`}
+                    >
+                      <FaExternalLinkAlt size={14} />
+                    </a>
+                  )}
+                </div>
+
+                <span className="contact-link-label">{link.label}</span>
+                <p className="contact-link-value">{link.value}</p>
+
+                {!isEmail && primaryAction && (
+                  <a
+                    href={primaryAction.href || link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contact-link-footer-action"
+                  >
+                    {primaryAction.label} →
+                  </a>
+                )}
+              </article>
+            );
+          })}
         </div>
       </div>
+
+      {toast && (
+        <div className="contact-toast" role="status" aria-live="polite">
+          {toast}
+        </div>
+      )}
     </section>
   );
 }
