@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { projects } from "@/lib/data";
 import SectionLine from "./SectionLine";
+import useSwiperControls from "./useSwiperControls";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -29,9 +30,7 @@ const PROJECT_IMAGES = {
 export default function Projects() {
   const visibleProjects = projects.filter((p) => p.slug !== "hireloop");
   const sectionRef = useRef(null);
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
-  const paginationRef = useRef(null);
+  const { prevRef, nextRef, paginationRef, setSwiper } = useSwiperControls();
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
 
   return (
@@ -51,39 +50,13 @@ export default function Projects() {
       <div className="projects-swiper-wrap">
         <Swiper
           modules={[Navigation, Pagination]}
+          onSwiper={setSwiper}
           spaceBetween={24}
           slidesPerView={1.2}
+          speed={300}
           loop
-          navigation={{
-            prevEl: prevRef.current,
-            nextEl: nextRef.current,
-          }}
-          pagination={{
-            el: paginationRef.current,
-            type: "progressbar",
-          }}
-          onBeforeInit={(swiper) => {
-            if (typeof swiper.params.navigation !== "boolean") {
-              swiper.params.navigation.prevEl = prevRef.current;
-              swiper.params.navigation.nextEl = nextRef.current;
-            }
-            if (typeof swiper.params.pagination !== "boolean") {
-              swiper.params.pagination.el = paginationRef.current;
-            }
-          }}
-          onInit={(swiper) => {
-            if (typeof swiper.params.navigation !== "boolean") {
-              swiper.params.navigation.prevEl = prevRef.current;
-              swiper.params.navigation.nextEl = nextRef.current;
-              swiper.navigation.init();
-              swiper.navigation.update();
-            }
-            if (typeof swiper.params.pagination !== "boolean") {
-              swiper.params.pagination.el = paginationRef.current;
-              swiper.pagination.init();
-              swiper.pagination.update();
-            }
-          }}
+          navigation
+          pagination={{ type: "progressbar" }}
           breakpoints={{
             640: { slidesPerView: 2.2, spaceBetween: 24 },
             1024: { slidesPerView: 3.2, spaceBetween: 24 },

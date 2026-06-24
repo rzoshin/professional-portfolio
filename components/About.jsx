@@ -42,7 +42,7 @@ export default function About() {
       <div className="about-card glass-card">
         <div className="about-card-inner">
           <div className="about-col about-col--identity">
-            <h3 className="about-name">{personalInfo.name}</h3>
+            <h2 className="about-name">{personalInfo.name}</h2>
             <p className="about-role">{personalInfo.role}</p>
             <span className="about-badge about-badge--available">
               {personalInfo.availability}

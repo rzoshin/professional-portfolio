@@ -2,7 +2,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { motion } from "framer-motion";
-import { useRef } from "react";
 import {
   FaHtml5,
   FaCss3Alt,
@@ -50,6 +49,7 @@ import { VscCode } from "react-icons/vsc";
 import { PiCursorClick } from "react-icons/pi";
 import { skills } from "@/lib/data";
 import SectionLine from "./SectionLine";
+import useSwiperControls from "./useSwiperControls";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -119,9 +119,7 @@ const SKILL_ICONS = {
 };
 
 export default function Skills() {
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
-  const paginationRef = useRef(null);
+  const { prevRef, nextRef, paginationRef, setSwiper } = useSwiperControls();
 
   return (
     <section className="skills" id="skills" data-dev-label="// Skills.jsx">
@@ -139,39 +137,14 @@ export default function Skills() {
       <div className="skills-swiper-wrap">
         <Swiper
           modules={[Navigation, Pagination]}
+          onSwiper={setSwiper}
           spaceBetween={24}
           slidesPerView={1.15}
+          speed={300}
           loop
-          navigation={{
-            prevEl: prevRef.current,
-            nextEl: nextRef.current,
-          }}
-          pagination={{
-            el: paginationRef.current,
-            type: "progressbar",
-          }}
-          onBeforeInit={(swiper) => {
-            if (typeof swiper.params.navigation !== "boolean") {
-              swiper.params.navigation.prevEl = prevRef.current;
-              swiper.params.navigation.nextEl = nextRef.current;
-            }
-            if (typeof swiper.params.pagination !== "boolean") {
-              swiper.params.pagination.el = paginationRef.current;
-            }
-          }}
-          onInit={(swiper) => {
-            if (typeof swiper.params.navigation !== "boolean") {
-              swiper.params.navigation.prevEl = prevRef.current;
-              swiper.params.navigation.nextEl = nextRef.current;
-              swiper.navigation.init();
-              swiper.navigation.update();
-            }
-            if (typeof swiper.params.pagination !== "boolean") {
-              swiper.params.pagination.el = paginationRef.current;
-              swiper.pagination.init();
-              swiper.pagination.update();
-            }
-          }}
+          grabCursor
+          navigation
+          pagination={{ type: "progressbar" }}
           breakpoints={{
             640: { slidesPerView: 1.6, spaceBetween: 20 },
             900: { slidesPerView: 2.2, spaceBetween: 24 },
